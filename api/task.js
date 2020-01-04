@@ -6,16 +6,16 @@ module.exports = app => {
             : moment().endOf('day').toDate()
 
         app.db('tasks')
-        .where({ userId: req.user.id })
-        .where('estimateAt', '<=', date)
-        .orderBy('estimateAt')
-        .then(tasks => res.json(tasks))
-        .catch(err => res.status(400).json(err))
+            .where({ userId: req.user.id })
+            .where('estimateAt', '<=', date)
+            .orderBy('estimateAt')
+            .then(tasks => res.json(tasks))
+            .catch(err => res.status(400).json(err))
     }
 
     const save = (req, res) => {
         if (!req.body.desc.trim()) {
-            return res.status(400).send('Descrição é um campo obrigatório!')
+            return res.status(400).send('Descrição é um campo obrigatório')
         }
 
         req.body.userId = req.user.id

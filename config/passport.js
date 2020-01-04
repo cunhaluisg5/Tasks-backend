@@ -1,4 +1,4 @@
-const { suthSecret } = require('../.env')
+const { authSecret } = require('../.env')
 const passport = require('passport')
 const passportJwt = require('passport-jwt')
 const { Strategy, ExtractJwt } = passportJwt
@@ -6,7 +6,7 @@ const { Strategy, ExtractJwt } = passportJwt
 module.exports = app => {
     const params = {
         secretOrKey: authSecret,
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     }
 
     const strategy = new Strategy(params, (payload, done) => {
@@ -22,10 +22,11 @@ module.exports = app => {
             })
             .catch(err => done(err, false))
     })
+
     passport.use(strategy)
 
     return {
         initialize: () => passport.initialize(),
-        authenticate: () => passport.authenticate('jwt', { session: false })
+        authenticate: () => passport.authenticate('jwt', { session: false }),
     }
 }
